@@ -1,0 +1,57 @@
+<!-- Fichier de configuration Maven du projet -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- Version du modèle Maven utilisé -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Identifiant du groupe du projet -->
+    <groupId>awele</groupId>
+
+    <!-- Nom du projet / module Maven -->
+    <artifactId>awele-server</artifactId>
+
+    <!-- Version du projet -->
+    <version>1.0</version>
+
+    <!-- Propriétés générales du projet -->
+    <properties>
+        <!-- Version de Java utilisée pour compiler le projet -->
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+
+        <!-- Encodage des fichiers du projet -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- Liste des bibliothèques utilisées par le projet -->
+    <dependencies>
+
+        <!-- Bibliothèque Gson pour manipuler du JSON -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
+        <!-- Dépendance Spring Boot Web
+             Permet de créer une API REST avec des contrôleurs HTTP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+
+        <!-- Dépendance OpenAPI / Swagger UI
+             Permet de générer une documentation interactive de l’API -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

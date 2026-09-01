@@ -1,0 +1,180 @@
+openapi: 3.0.2
+info:
+  title: API Awele
+  description: API pour gérer un jeu d'Awele.
+  version: 1.1.0
+servers:
+  - url: http://127.0.0.1:8080/v1
+paths:
+  /awele/connect:
+    post:
+      operationId: "connect"
+      description: "log a player"
+      parameters:
+        - in: "query"
+          name: "name"
+          schema:
+            type: "string"
+      responses:
+        '200':
+          description: "playerId : this is a random number not equal to 1 and identifying the human player. The machine id is equal to 1"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+  /awele/deconnect:
+    post:
+      operationId: "disconnect"
+      description: "logout a player"
+      parameters:
+        - in: "query"
+          name: "playerId"
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "playerId"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+  /awele/player:
+    get:
+      operationId: "getPlayer"
+      description: "return a Player"
+      parameters:
+        - in: "query"
+          name: "playerId"
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "the player object"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restPlayer"
+  /awele/board:
+    get:
+      operationId: "getBoard"
+      description: "return the Holes"
+      parameters:
+        - in: "query"
+          name: "playerId"
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "the Board object"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restBoard"
+  /awele/sow_user:
+    post:
+      operationId: "sow_user"
+      description: "sow a hole for a specified player"
+      parameters:
+        - in: "query"
+          name: "hole"
+          schema:
+            type: "integer"
+        - in: "query"
+          name: "playerId"
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "the number of items captured. -1 if sow forbidden"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+        '404':
+          description: "error message"
+          content:
+            application/json:
+              schema:
+                type: "string"
+  /awele/sow_machine:
+    post:
+      operationId: "sow_machine"
+      description: "sow a hole for a specified player"
+      parameters:
+        - in: "query"
+          name: "playerId"
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "the hole choosed. -1 if sow forbidden"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+        '404':
+          description: "error message"
+          content:
+            application/json:
+              schema:
+                type: "string"
+  /awele/turn:
+    get:
+      operationId: "getTurn"
+      description: "return which player must play"
+      parameters:
+        - in: "query"
+          name: "playerId"
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "Player to play or null if bad id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/restPlayer"
+  /awele/state:
+    get:
+      operationId: "getState"
+      description: "return the state of the play"
+      parameters:
+        - in: "query"
+          name: "playerId"
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "-2=bad id, -1=waiting player, 0=run, 1=player 1 win, 2=player 2 win, 3=both"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+
+
+components:
+  securitySchemes: {}
+  schemas:
+    restBoard:
+      properties:
+        holes-player1:
+          nullable: false
+          type: "array"
+          items:
+            type: "integer"
+        holes-player2:
+          nullable: false
+          type: "array"
+          items:
+            type: "integer"
+    restPlayer:
+      properties:
+        id:
+          nullable: false
+          type: "integer"
+        name:
+          nullable: false
+          type: "string"
+        score:
+          nullable: false
+          type: "integer"
